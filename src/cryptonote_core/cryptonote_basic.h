@@ -459,11 +459,14 @@ namespace cryptonote
 
     transaction miner_tx;
     std::vector<crypto::hash> tx_hashes;
+    mutable crypto::hash uncle = cryptonote::null_hash;
 
     BEGIN_SERIALIZE_OBJECT()
       FIELDS(*static_cast<block_header *>(this))
       FIELD(miner_tx)
       FIELD(tx_hashes)
+      if (major_version > 7)
+        FIELD(uncle)
     END_SERIALIZE()
   };
 
@@ -497,11 +500,14 @@ namespace cryptonote
   {
     bb_transaction miner_tx;
     std::vector<crypto::hash> tx_hashes;
+    mutable crypto::hash uncle = cryptonote::null_hash;
 
     BEGIN_SERIALIZE()
       FIELDS(*static_cast<bb_block_header *>(this))
       FIELD(miner_tx)
       FIELD(tx_hashes)
+      if (major_version > 7)
+        FIELD(uncle)
     END_SERIALIZE()
   };
 
